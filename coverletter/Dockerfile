@@ -28,11 +28,18 @@ RUN apt-get update && \
     sudo \
     locales \
     gosu \
+    passwd \
+    python3 python3-pip \
     && locale-gen en_US.UTF-8
 
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
+
+RUN pip install --no-cache-dir Jinja2
+
+RUN echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

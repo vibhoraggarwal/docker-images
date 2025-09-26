@@ -11,4 +11,5 @@ fi
 if ! id -u $USERNAME >/dev/null 2>&1; then
     useradd -m -u ${USER_UID:-1000} -g ${USER_GID:-1000} -s /bin/bash $USERNAME
 fi
+
 exec gosu ${USERNAME} "$@"
